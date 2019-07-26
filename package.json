@@ -1,0 +1,21 @@
+{
+  "name": "crap-paint",
+  "version": "0.0.1",
+  "description": "like paint but crap",
+  "main": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc && browserify ./dist/index.js -o ./public/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nrkn/crap-paint.git"
+  },
+  "keywords": [],
+  "author": "Nik Coughlin <nrkn.com@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nrkn/crap-paint/issues"
+  },
+  "homepage": "https://github.com/nrkn/crap-paint#readme"
+}
