@@ -1,4 +1,4 @@
-import { nonZeroInt } from './util'
+import { nonZeroInt } from '../util'
 
 export const imageToImageData = ( img: HTMLImageElement ) => {
   const { naturalWidth: width, naturalHeight: height } = img

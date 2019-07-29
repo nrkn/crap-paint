@@ -5,7 +5,8 @@
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
   "scripts": {
-    "build": "tsc && browserify ./dist/index.js -o ./public/index.js"
+    "build": "tsc && browserify ./dist/index.js -o ./public/index.js",
+    "start": "npm run build && node ./dist/server"
   },
   "repository": {
     "type": "git",
@@ -17,5 +18,9 @@
   "bugs": {
     "url": "https://github.com/nrkn/crap-paint/issues"
   },
-  "homepage": "https://github.com/nrkn/crap-paint#readme"
+  "homepage": "https://github.com/nrkn/crap-paint#readme",
+  "dependencies": {
+    "@types/express": "^4.17.0",
+    "express": "^4.17.1"
+  }
 }

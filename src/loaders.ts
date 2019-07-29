@@ -1,4 +1,4 @@
-import { imageDataToPalette } from './palette'
+import { imageDataToPalette } from './color/palette'
 import { imageToImageData } from './image'
 
 export const loadPalette = async ( src: string ) => {

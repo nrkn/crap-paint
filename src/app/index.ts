@@ -1,9 +1,10 @@
-import { Palette } from './types'
-import { h, css, populateElement } from './util'
-import { paletteToImage, slicePalette, createRgb } from './palette'
-import { createCanvasContext } from './image'
-import { line } from './line'
-import { floodFill } from './floodfill';
+import { Palette } from '../color/types'
+import { h, css, populateElement } from '../util'
+import { paletteToImage, slicePalette } from '../color/palette'
+import { createCanvasContext } from '../image'
+import { line } from '../operations/line'
+import { floodFill } from '../operations/floodfill'
+import { createRgb } from '../color/rgb'
 
 export const paint = ( palette: Palette, fill: number, selected: number ) => {
   const app = h(
@@ -88,6 +89,16 @@ export const paintCanvas = ( width: number, height: number, palette: Palette, fi
   let last: [ number, number ] | null = null
   let selectedIndex = fillIndex
 
+  const getSelectedColor = () => {
+    const selectEl = document.querySelector( '[data-index]' ) as HTMLElement
+
+    selectedIndex = Number( selectEl.dataset.index )
+
+    const rgb = palette[ selectedIndex ]
+
+    return rgb
+  }
+
   const getCanvasCoords = ( e: MouseEventInit ) => {
     const { left, top, height: ch } = canvas.getBoundingClientRect()
     const { clientX, clientY } = e
@@ -113,21 +124,18 @@ export const paintCanvas = ( width: number, height: number, palette: Palette, fi
 
     if ( typeof m === 'string' ) mode = m
 
-    if( mode === 'paint' ) return
-
-    const selectEl = document.querySelector( '[data-index]' ) as HTMLElement
-
-    selectedIndex = Number( selectEl.dataset.index )
-
     const [ cx, cy ] = getCanvasCoords( e )
-
+    const rgb = getSelectedColor()
     const sindex = ( cy * width + cx ) * 4
     const sr = imageData.data[ sindex ]
     const sg = imageData.data[ sindex + 1 ]
     const sb = imageData.data[ sindex + 2 ]
 
+    if( mode === 'paint' ){
+      return
+    }
+
     const srgb = createRgb( sr, sg, sb )
-    const rgb = palette[ selectedIndex ]
 
     if( srgb === rgb ){
       return
@@ -167,9 +175,16 @@ export const paintCanvas = ( width: number, height: number, palette: Palette, fi
     drawing = true
     last = getCanvasCoords( e )
 
-    const selectEl = document.querySelector( '[data-index]' ) as HTMLElement
+    const [ r, g, b ] = getSelectedColor()
+    const [ x, y ] = last
+    const index = ( y * width + x ) * 4
 
-    selectedIndex = Number( selectEl.dataset.index )
+    imageData.data[ index ] = r
+    imageData.data[ index + 1 ] = g
+    imageData.data[ index + 2 ] = b
+    imageData.data[ index + 3 ] = 255
+
+    context.putImageData( imageData, 0, 0 )
   }
 
   const mouseup: EventListener = ( e: MouseEventInit ) => {
