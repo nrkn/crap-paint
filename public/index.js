@@ -345,7 +345,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const loaders_1 = require("./loaders");
 const app_1 = require("./app");
 const start = async () => {
-    const main = document.querySelector('main');
+    const main = document.querySelector('#main');
     const palette = await loaders_1.loadPalette('palette.png');
     const paintApp = app_1.paint(palette, 9, 10);
     main.appendChild(paintApp);
